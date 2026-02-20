@@ -5,7 +5,7 @@ from psycopg2 import sql
 from config import conn
 
 # Utility function to execute SELECT queries
-def fetch_all(query, params=None):
+def fetch_df(query, params=None):
     """
     Execute a SELECT query and return all results.
     """
@@ -51,5 +51,4 @@ def get_all_channels():
     Fetch all YouTube channels from the DB.
     """
     query = "SELECT * FROM youtube_channels ORDER BY subscribers DESC"
-    return fetch_all(query)
-
+    return fetch_df(query)
