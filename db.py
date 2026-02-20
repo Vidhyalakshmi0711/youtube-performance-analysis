@@ -15,7 +15,7 @@ def fetch_df(query, params=None):
             result = cur.fetchall()
         return result
     except psycopg2.Error as e:
-        st.error(f"Database error (fetch_all): {e}")
+        st.error(f"Database error (fetch_df): {e}")
         conn.rollback()  # Reset failed transaction
         return []
 
@@ -52,3 +52,4 @@ def get_all_channels():
     """
     query = "SELECT * FROM youtube_channels ORDER BY subscribers DESC"
     return fetch_df(query)
+
