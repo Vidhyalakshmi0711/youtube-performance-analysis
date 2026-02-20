@@ -1,16 +1,16 @@
 # config.py
-import os
-from dotenv import load_dotenv
+import streamlit as st
+import psycopg2
 
-load_dotenv()   # load .env file
+# Database connection
+conn = psycopg2.connect(
+    host=st.secrets["DB_HOST"],
+    database=st.secrets["DB_NAME"],
+    user=st.secrets["DB_USER"],
+    password=st.secrets["DB_PASSWORD"],
+    port=st.secrets["DB_PORT"],
+    sslmode="require"
+)
 
-API_KEY = os.getenv("YOUTUBE_API_KEY")
-CHANNEL_HANDLE = os.getenv("CHANNEL_HANDLE")   # optional
-
-DB_CONFIG = {
-    "host": "localhost",
-    "database": "youtube_analytics",
-    "user": "postgres",
-    "password": os.getenv("DB_PASSWORD"),
-    "port": 5432
-}
+# YouTube API key
+API_KEY = st.secrets["YOUTUBE_API_KEY"]
