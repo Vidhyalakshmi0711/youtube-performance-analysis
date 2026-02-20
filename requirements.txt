@@ -4,3 +4,5 @@ plotly
 pandas
 isodate
 streamlit-echarts
+psycopg2-binary
+python-dotenv
