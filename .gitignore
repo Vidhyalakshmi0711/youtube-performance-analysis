@@ -23,6 +23,11 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Neon & SQL
+yt_data.sql
+yt_data_utf8.sql
+
+
 # Logs
 *.log
 
