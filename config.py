@@ -1,6 +1,8 @@
 # config.py
 import os
 import psycopg2
+import streamlit as st
+
 
 # ---------------------------------------------------
 # ENVIRONMENT DETECTION
@@ -43,3 +45,4 @@ def get_connection():
         port=DB_PORT,
         sslmode="require"
     )
+
