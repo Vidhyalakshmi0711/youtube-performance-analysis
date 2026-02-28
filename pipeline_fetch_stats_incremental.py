@@ -1,7 +1,7 @@
 from googleapiclient.discovery import build
 from datetime import date
 from config import API_KEY
-from db import fetch_all, execute_query
+from db_neon_1 import fetch_all, execute_query
 
 youtube = build("youtube", "v3", developerKey=API_KEY)
 
@@ -95,4 +95,5 @@ def fetch_today_stats():
 # RUN
 # --------------------------------------------------------
 if __name__ == "__main__":
+
     fetch_today_stats()
