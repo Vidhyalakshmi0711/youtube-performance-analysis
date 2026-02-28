@@ -30,7 +30,7 @@ else:
     DB_USER = os.getenv("DB_USER")
     DB_PASSWORD = os.getenv("DB_PASSWORD")
     DB_PORT = os.getenv("DB_PORT")
-    API_KEY = os.getenv("API_KEY")
+    API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 
 # ---------------------------------------------------
@@ -45,4 +45,5 @@ def get_connection():
         port=DB_PORT,
         sslmode="require"
     )
+
 
