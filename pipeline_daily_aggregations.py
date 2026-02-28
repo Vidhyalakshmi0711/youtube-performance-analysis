@@ -1,4 +1,4 @@
-from db import execute_query
+from db_neon_1 import execute_query
 
 # ---------------------------------------------------------
 # DAILY CHANNEL STATS
@@ -70,4 +70,5 @@ def run_all():
     print("✅ Aggregations Done.")
 
 if __name__ == "__main__":
+
     run_all()
