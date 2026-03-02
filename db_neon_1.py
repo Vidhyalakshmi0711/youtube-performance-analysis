@@ -4,7 +4,7 @@ import psycopg2
 from psycopg2 import pool
 from dotenv import load_dotenv
 import pandas as pd
-import streamlit as st
+
 
 load_dotenv()
 
@@ -65,4 +65,5 @@ def fetch_df(query, params=None):
         return df
     finally:
         release_conn(conn)
+
 
