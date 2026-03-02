@@ -18,6 +18,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # 🔥 IMPORTANT: Clean old cached workspace
+      - name: Clean workspace
+        run: rm -rf ./*
+
+      # Fresh checkout of your latest repo (with correct config.py)
       - uses: actions/checkout@v3
 
       - name: Setup Python
