@@ -7,7 +7,7 @@ on:
 
 env:
   # Load from GitHub Secrets
-  NEON_DB_URL: ${{ secrets.NEON_DB_URL }}              # <-- REQUIRED WRITE URL
+  NEON_DB_URL_WRITE: ${{ secrets.NEON_DB_URL_WRITE }}              # <-- REQUIRED WRITE URL
   YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Debug secrets loaded
         run: |
-          echo "NEON_DB_URL exists? = ${{ secrets.NEON_DB_URL != '' }}"
+          echo "NEON_DB_URL_WRITE exists? = ${{ secrets.NEON_DB_URL_WRITE != '' }}"
           echo "API key exists? = ${{ secrets.YOUTUBE_API_KEY != '' }}"
 
       - name: Run New Video Fetch
