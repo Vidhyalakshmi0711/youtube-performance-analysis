@@ -6,12 +6,12 @@ from urllib.parse import urlparse
 # -------------------------------
 # PARSE NEON DATABASE URL
 # -------------------------------
-NEON_DB_URL = os.getenv("NEON_DB_URL_WRITE")
+NEON_WRITE = os.getenv("NEON_DB_URL_WRITE")
 
-if not NEON_DB_URL:
-    raise ValueError("NEON_DB_URL is missing. Add it to your .env or GitHub secrets.")
+if not NEON_WRITE:
+    raise ValueError("NEON_DB_URL_WRITE is missing. Add it to your .env or GitHub secrets.")
 
-url = urlparse(NEON_DB_URL)
+url = urlparse(NEON_WRITE)
 
 DB_HOST = url.hostname
 DB_NAME = url.path.lstrip("/")
@@ -35,4 +35,5 @@ conn = psycopg2.connect(
 # YOUTUBE API KEY
 # -------------------------------
 API_KEY = os.getenv("YOUTUBE_API_KEY")
+
 
