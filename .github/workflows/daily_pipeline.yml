@@ -6,11 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  DB_HOST: ${{ secrets.DB_HOST }}
-  DB_NAME: ${{ secrets.DB_NAME }}
-  DB_USER: ${{ secrets.DB_USER }}
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_PORT: ${{ secrets.DB_PORT }}
+  # Load from GitHub Secrets
+  NEON_DB_URL: ${{ secrets.NEON_DB_URL }}              # <-- REQUIRED WRITE URL
   YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
 jobs:
@@ -19,11 +16,9 @@ jobs:
 
     steps:
 
-      # 🔥 IMPORTANT: Clean old cached workspace
       - name: Clean workspace
         run: rm -rf ./*
 
-      # Fresh checkout of your latest repo (with correct config.py)
       - uses: actions/checkout@v3
 
       - name: Setup Python
@@ -32,7 +27,12 @@ jobs:
           python-version: "3.10"
 
       - name: Install Dependencies
-        run: pip install google-api-python-client psycopg2-binary
+        run: pip install -r requirements.txt
+
+      - name: Debug secrets loaded
+        run: |
+          echo "NEON_DB_URL exists? = ${{ secrets.NEON_DB_URL != '' }}"
+          echo "API key exists? = ${{ secrets.YOUTUBE_API_KEY != '' }}"
 
       - name: Run New Video Fetch
         run: python pipeline_fetch_videos_incremental.py
