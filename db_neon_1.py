@@ -11,7 +11,7 @@ load_dotenv()
 # -----------------------------------------
 # Use correct Neon DB URL (NOT admin URL)
 # -----------------------------------------
-DATABASE_URL = os.getenv("NEON_DB_URL")
+DATABASE_URL = os.getenv("NEON_ADMIN_URL")
 
 # -----------------------------------------
 # Larger Pool for Streamlit
@@ -65,5 +65,6 @@ def fetch_df(query, params=None):
         return df
     finally:
         release_conn(conn)
+
 
 
