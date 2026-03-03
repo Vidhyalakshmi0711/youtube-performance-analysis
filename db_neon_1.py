@@ -5,66 +5,64 @@ from psycopg2 import pool
 from dotenv import load_dotenv
 import pandas as pd
 
-
 load_dotenv()
 
 # -----------------------------------------
-# Use correct Neon DB URL (NOT admin URL)
+# USE ROLE-BASED DB CONNECTIONS
 # -----------------------------------------
-DATABASE_URL = os.getenv("NEON_ADMIN_URL")
+DB_WRITE = os.getenv("NEON_DB_URL_WRITE")   # neondb_owner
+DB_READ  = os.getenv("NEON_DB_URL_READ")    # yt_dashboard_ro
 
 # -----------------------------------------
-# Larger Pool for Streamlit
+# CONNECTION POOLS
 # -----------------------------------------
-neon_pool = psycopg2.pool.SimpleConnectionPool(
-    minconn=1,
-    maxconn=10,   # increased from 5
-    dsn=DATABASE_URL
+pool_write = psycopg2.pool.SimpleConnectionPool(
+    minconn=1, maxconn=5, dsn=DB_WRITE
 )
 
-# -----------------------------------------
-# Get / Release Connection
-# -----------------------------------------
-def get_conn():
-    return neon_pool.getconn()
+pool_read = psycopg2.pool.SimpleConnectionPool(
+    minconn=1, maxconn=10, dsn=DB_READ
+)
 
-def release_conn(conn):
-    neon_pool.putconn(conn)
+def get_conn_write():
+    return pool_write.getconn()
 
-# -----------------------------------------
-# FETCH ALL
-# -----------------------------------------
-def fetch_all(query, params=None):
-    conn = get_conn()
-    try:
-        with conn.cursor() as cur:
-            cur.execute(query, params)
-            return cur.fetchall()
-    finally:
-        release_conn(conn)
+def release_conn_write(conn):
+    pool_write.putconn(conn)
+
+def get_conn_read():
+    return pool_read.getconn()
+
+def release_conn_read(conn):
+    pool_read.putconn(conn)
 
 # -----------------------------------------
-# EXECUTE (INSERT / UPDATE)
+# WRITE / UPSERT
 # -----------------------------------------
 def execute_query(query, params=None):
-    conn = get_conn()
+    conn = get_conn_write()
+    cur = conn.cursor()
+
+    cur.execute("SELECT current_user;")
+    print("🔎 Connected as:", cur.fetchone()[0])
+
     try:
-        with conn.cursor() as cur:
-            cur.execute(query, params)
-            conn.commit()
+        cur.execute(query, params)
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
     finally:
-        release_conn(conn)
+        cur.close()
+        release_conn_write(conn)
 
 # -----------------------------------------
-# FETCH DATAFRAME (Streamlit safe)
+# READ FOR DASHBOARD
 # -----------------------------------------
 def fetch_df(query, params=None):
-    conn = get_conn()
+    conn = get_conn_read()
     try:
         df = pd.read_sql(query, conn, params=params)
         return df
     finally:
-        release_conn(conn)
-
-
-
+        release_conn_read(conn)
