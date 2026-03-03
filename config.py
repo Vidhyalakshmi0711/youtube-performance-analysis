@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 # -------------------------------
 # PARSE NEON DATABASE URL
 # -------------------------------
-NEON_DB_URL = os.getenv("NEON_ADMIN_URL")
+NEON_DB_URL = os.getenv("NEON_DB_URL_WRITE")
 
 if not NEON_DB_URL:
     raise ValueError("NEON_DB_URL is missing. Add it to your .env or GitHub secrets.")
