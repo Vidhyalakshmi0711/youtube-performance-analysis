@@ -8,6 +8,7 @@ on:
 env:
   # Load from GitHub Secrets
   NEON_DB_URL_WRITE: ${{ secrets.NEON_DB_URL_WRITE }}              # <-- REQUIRED WRITE URL
+  NEON_DB_URL_READ: ${{ secrets.NEON_DB_URL_READ }}  
   YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
 jobs:
