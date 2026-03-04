@@ -59,10 +59,11 @@ def execute_query(query, params=None):
 # -----------------------------------------
 # READ FOR DASHBOARD
 # -----------------------------------------
-def fetch_df(query, params=None):
+def fetch_all(query, params=None):
     conn = get_conn_read()
     try:
         df = pd.read_sql(query, conn, params=params)
         return df
     finally:
         release_conn_read(conn)
+
