@@ -61,9 +61,10 @@ def execute_query(query, params=None):
 # -----------------------------------------
 def fetch_all(query, params=None):
     conn = get_conn_read()
+    cur = conn.cursor()
     try:
-        df = pd.read_sql(query, conn, params=params)
-        return df
+        cur.execute(query, params)
+        return cur.fetchall()  # <-- list of tuples
     finally:
+        cur.close()
         release_conn_read(conn)
-
