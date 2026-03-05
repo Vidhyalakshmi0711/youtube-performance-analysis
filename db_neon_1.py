@@ -66,5 +66,7 @@ def fetch_all(query, params=None):
         cur.execute(query, params)
         return cur.fetchall()  # <-- list of tuples
     finally:
+        columns = [desc[0] for desc in cur.description]   #<------changed here
         cur.close()
         release_conn_read(conn)
+
