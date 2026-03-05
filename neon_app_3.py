@@ -23,9 +23,9 @@ video_master, stats, channels = load_data()
 # MERGE STATS + VIDEO MASTER
 # =====================
 
-video_master = pd.DataFrame(video_master, columns=columns)
+video_master = pd.DataFrame(video_master, columns=columns)     #<----- chaanged here
 
-video_master_clean = video_master.drop(columns=["channel_id", "channel_name"], errors="ignore")
+video_master_clean = video_master.drop(columns=["channel_id", "channel_name"], errors="ignore")   
 df = stats.merge(video_master_clean, on="video_id", how="left")
 
 df["date"] = pd.to_datetime(df["date"], errors="coerce")
@@ -160,6 +160,7 @@ with tab3:
     fig3 = px.pie(channel_views, names="channel_name", values="views",
                   title="Channel Comparison by Views")
     st.plotly_chart(fig3, use_container_width=True)
+
 
 
 
