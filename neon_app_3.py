@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from db_neon_1 import fetch_df   # Your Neon DB helper
+from db_neon_1 import fetch_all   # Your Neon DB helper
 
 st.set_page_config(page_title="YouTube Intelligence Dashboard", layout="wide")
 
@@ -157,4 +157,5 @@ with tab3:
     fig3 = px.pie(channel_views, names="channel_name", values="views",
                   title="Channel Comparison by Views")
     st.plotly_chart(fig3, use_container_width=True)
+
 
