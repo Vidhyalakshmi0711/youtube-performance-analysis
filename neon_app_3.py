@@ -11,9 +11,9 @@ st.set_page_config(page_title="YouTube Intelligence Dashboard", layout="wide")
 
 @st.cache_data(ttl=600)  # cache for 10 minutes (IMPORTANT)
 def load_data():
-    video_master = fetch_df("SELECT * FROM video_master")
-    stats = fetch_df("SELECT * FROM daily_video_stats")
-    channels = fetch_df("SELECT * FROM channels")
+    video_master = fetch_all("SELECT * FROM video_master")
+    stats = fetch_all("SELECT * FROM daily_video_stats")
+    channels = fetch_all("SELECT * FROM channels")
     return video_master, stats, channels
 
 video_master, stats, channels = load_data()
@@ -157,5 +157,6 @@ with tab3:
     fig3 = px.pie(channel_views, names="channel_name", values="views",
                   title="Channel Comparison by Views")
     st.plotly_chart(fig3, use_container_width=True)
+
 
 
