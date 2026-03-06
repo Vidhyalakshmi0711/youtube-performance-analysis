@@ -23,6 +23,9 @@ video_master, stats, channels = load_data()
 # MERGE STATS + VIDEO MASTER
 # =====================
 
+stats_columns = [ "date", "channel_name", "video_id", "views", "likes", "comments"]  # adjust to your schema
+stats = pd.DataFrame(stats, columns=stats_columns)
+
 columns = [
     "video_id",
     "title",
@@ -168,6 +171,7 @@ with tab3:
     fig3 = px.pie(channel_views, names="channel_name", values="views",
                   title="Channel Comparison by Views")
     st.plotly_chart(fig3, use_container_width=True)
+
 
 
 
